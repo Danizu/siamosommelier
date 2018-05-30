@@ -14,12 +14,15 @@ Utilizzeremo tecniche di Machine Learning che, esaminando i dati delle aste pass
 
 Per mettere a punto il modello useremo due strade:  
 
-1) scriveremo un Jupyther Notebook in linguaggio R. Il codice avra’ il compito di leggere il dataset delle aste passate, capire quali sono I parametri rilevanti per il modello e costruira’ un modello di regressione lineare che collega andamento prezzi con anni di invecchiamento e dati meteo relative alla specifica bottiglia di vino.
+1) scriveremo un Jupyter Notebook in linguaggio R. Il codice avra’ il compito di leggere il dataset delle aste passate, capire quali sono I parametri rilevanti per il modello e costruira’ un modello di regressione lineare che collega andamento prezzi con anni di invecchiamento e dati meteo relative alla specifica bottiglia di vino.
 
 2) useremo il servizio di Modeler Flows e Watson Machine Learning. Costruiremo Un Modeler Flow che prende il dataset di input, specificheremo quali sono le variabili/Indipendente e faremo il training di un modello di regressione lineare.
 
 Le istruzioni per il laboratorio sono contenute in due file:
 
-la prima parte e' contenuta in handsonthink_part1.pdf
+la prima parte e' contenuta in handsonthink_part1.pdf 
+qui trovi le istruzioni per creare utenza in IBM Cloud, per fare il provisioning dei servizi che ti servono per eseguire il Jupyter Notebook, 
+per fare download del Notebook ed eseguirlo
 
 la seconda parte e' contenuta in handsonthink_part2.pdf
+qui trovi le istruzioni per lavorare con il Modeler Flow e l'interfaccia di programmazione grafica
