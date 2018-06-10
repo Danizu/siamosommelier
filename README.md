@@ -1,5 +1,4 @@
 # siamosommelier
-Linear regression in R applied to Wine Quality
 
 Il valore di una bottiglia di vino di annata e' un investimento difficile da decidere e la qualita' del vino e' qualcosa di misterioso affidato alla decisione dei Sommelier.
 
