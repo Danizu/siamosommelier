@@ -12649,15 +12649,15 @@ div#notebook {
 <h1 id="Iniziamo-il-laboratorio!">Iniziamo il laboratorio!<a class="anchor-link" href="#Iniziamo-il-laboratorio!">&#182;</a></h1><p>Vediamo da vicino cosa e' il <strong>Machine Learning</strong> con questo semplice esercizio.
 Per fare questo scriveremo un programma. 
 Il codice che scriveremo, pero', non avra' lo scopo di definire in forma di <strong>source code</strong> le regole in base alle quali rispondere a degli input.</p>
-<p>Al contrario il codice che scriveremo avra' lo scopo di imparare dai dati, rappresentazione du'esperienza passata, come  rispondere agli input futuri. Il nostro codice sara' focalizzato sugli aspetti di lettura dati, sulla comprensione di quali parametri siano rilevanti per il problema e di quale sia il modello matematico migliore per effettuare apprendimento o meglio il training del programma.</p>
+<p>Al contrario il codice che scriveremo avra' lo scopo di imparare dai dati, rappresentazione di un'esperienza passata, come  rispondere agli input futuri. Il nostro codice sara' focalizzato sugli aspetti di lettura dati, sulla comprensione di quali parametri siano rilevanti per il problema e di quale sia il modello matematico migliore per effettuare apprendimento o meglio il training del programma.</p>
 <p>Il caso che esaminiamo e' reale e fa parte della letteratura: nel 1990 un professore di economia mette a punto un modello capace di predire la qualita', e quindi il prezzo, delle bottiglie di vino Bordeaux. Il modello prende in considerazione parametri legati alle condizioni meteo nel periodo di maturazione dei vigneti e durante la vendemmia. Il risultato e' un modello in grado di dire se da una vendemmia potra' nascere un vino d'annata capace di apprezzarsi con l'invecchiamento.</p>
 <p>Il metodo che viene usato si chiama Regressione Lineare e predice i valori che puo' assumere una variabile dipendente a partire dai valori che assume un set di varaibili indipendenti.</p>
 <ul>
 <li>una variabile del dataset viene considerata dipendente, o target ,e sara' proprio questa variabile che il modello dovra' predire</li>
-<li>un set di variabili saranno indipendenti e satanno usate per determinare il valore della variabile dipendente </li>
+<li>un set di variabili saranno indipendenti e saranno usate per determinare il valore della variabile dipendente </li>
 </ul>
 <p>Il nostro dataset di training si chiama wine.csv.</p>
-<p>Porta il file wine.csv su object storage parendo la sezione dati: puoi fare drag and drop oppure fai upload con browse. Troverai il file wine.csv anche nella sezione data asset.</p>
+<p>Porta il file wine.csv su object storage aprendo la sezione dati: puoi fare drag and drop oppure fai upload con browse. Troverai il file wine.csv anche nella sezione data asset.</p>
 <ul>
 <li><p>Posizionati con il cursore nella cella sottostante</p>
 </li>
@@ -12689,7 +12689,28 @@ Il codice che scriveremo, pero', non avra' lo scopo di definire in forma di <str
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span class="c1"># The code was removed by DSX for sharing.</span>
+<div class=" highlight hl-r"><pre><span class="kn">library</span><span class="p">(</span><span class="s">&quot;aws.s3&quot;</span><span class="p">)</span>
+
+<span class="c1"># @hidden_cell</span>
+<span class="c1"># The following code accesses a file in your IBM Cloud Object Storage. It includes your credentials.</span>
+<span class="c1"># You might want to remove those credentials before you share your notebook.</span>
+<span class="kp">Sys.setenv</span><span class="p">(</span><span class="s">&quot;AWS_ACCESS_KEY_ID&quot;</span> <span class="o">=</span> <span class="s">&quot;a142ee6e423149e3b40da6ac254fb0bc&quot;</span><span class="p">,</span> <span class="s">&quot;AWS_SECRET_ACCESS_KEY&quot;</span> <span class="o">=</span> <span class="s">&quot;ef51f0d23fafb383939a730e16279f93cea1e2e7e0da29f7&quot;</span><span class="p">)</span>
+url <span class="o">&lt;-</span> <span class="s">&quot;s3.eu-geo.objectstorage.service.networklayer.com&quot;</span>
+bucket <span class="o">&lt;-</span> <span class="s">&quot;vinipertutti-donotdelete-pr-yla9xhyyfbhc2z&quot;</span>
+headers <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span><span class="sb">`x-amz-content-sha256`</span><span class="o">=</span><span class="s">&quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;</span><span class="p">)</span>
+
+obj <span class="o">&lt;-</span> s3HTTP<span class="p">(</span>
+    verb <span class="o">=</span> <span class="s">&quot;GET&quot;</span><span class="p">,</span>
+    bucket <span class="o">=</span> bucket<span class="p">,</span>
+    headers <span class="o">=</span> headers<span class="p">,</span>
+    path <span class="o">=</span> <span class="s">&quot;wine.csv&quot;</span><span class="p">,</span>
+    key <span class="o">=</span> <span class="kp">Sys.getenv</span><span class="p">(</span><span class="s">&quot;AWS_ACCESS_KEY_ID&quot;</span><span class="p">),</span>
+    secret <span class="o">=</span> <span class="kp">Sys.getenv</span><span class="p">(</span><span class="s">&quot;AWS_SECRET_ACCESS_KEY&quot;</span><span class="p">),</span>
+    check_region <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+    base_url <span class="o">=</span> <span class="kp">url</span><span class="p">)</span>
+
+wine <span class="o">&lt;-</span> read.csv<span class="p">(</span>text <span class="o">=</span> <span class="kp">rawToChar</span><span class="p">(</span>obj<span class="o">$</span>content<span class="p">))</span>
+<span class="kp">head</span><span class="p">(</span>wine<span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12781,7 +12802,7 @@ Il codice che scriveremo, pero', non avra' lo scopo di definire in forma di <str
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span class="kp">summary</span><span class="p">(</span>wine<span class="p">)</span>
@@ -12832,8 +12853,8 @@ Il codice che scriveremo, pero', non avra' lo scopo di definire in forma di <str
 <p>Abbiamo gli attributi associati alle bottiglie di vino e poi abbiamo il prezzo di aggiudicazione d'asta della bottiglia.</p>
 <ul>
 <li><p>Per il momento consideriamo una sola variabile e proviamo a vedere come e' collegata al prezzo di aggiudicazione del vino.</p>
-<p>La variabile che usiamo e' <strong>AGST</strong> un acronimo che sta per <strong>Average Growth Season Temperature</strong> si tratta cioe' della temperatura media nella fase di maturazione dell'uva.</p>
-<p>Facciamo un grafico che rappresenta il price nelle ordinate e AGST nelle ascisse.</p>
+<p>La variabile che usiamo e' <strong>AGE</strong> si tratta degli anni di invecchiamento della bottiglia di vino.</p>
+<p>Facciamo un grafico che rappresenta il price nelle ordinate e AGE nelle ascisse.</p>
 </li>
 </ul>
 
@@ -12842,11 +12863,10 @@ Il codice che scriveremo, pero', non avra' lo scopo di definire in forma di <str
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span class="kn">library</span><span class="p">(</span>ggplot2<span class="p">)</span>
-<span class="c1">#pc1=ggplot(wine,aes(x=AGST,y=(log di)Price))</span>
 pc1<span class="o">=</span>ggplot<span class="p">(</span>wine<span class="p">,</span>aes<span class="p">(</span>x<span class="o">=</span>Age<span class="p">,</span>y<span class="o">=</span>Price<span class="p">))</span>
 pc1<span class="o">=</span>pc1<span class="o">+</span>geom_point<span class="p">()</span><span class="o">+</span>ylab<span class="p">(</span><span class="s">&quot;Log di Price&quot;</span><span class="p">)</span>
 pc1
@@ -12893,7 +12913,7 @@ pc1
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>Come secondo step togliamo il carattere # di commento e rappresentiamo il valore medio del prezzo. 
+<li>Come secondo step rappresentiamo il valore medio del prezzo. 
 Il valore medio e' un valore costante che rappresentera' il nostro numero di riferimento. 
 Il nostro modello dovra' portare un miglioramento rispetto a questa una stima media del prezzo.</li>
 </ul>
@@ -12903,7 +12923,7 @@ Il nostro modello dovra' portare un miglioramento rispetto a questa una stima me
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre>media<span class="o">=</span><span class="kp">sum</span><span class="p">(</span>wine<span class="o">$</span>Price<span class="p">)</span><span class="o">/</span><span class="m">28.0</span>
@@ -12962,7 +12982,7 @@ media
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre>distanza_da_media<span class="o">=</span><span class="kp">sum</span><span class="p">((</span>wine<span class="o">$</span>Price<span class="o">-</span>media<span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
@@ -13000,9 +13020,9 @@ distanza_da_media
 <hr>
 <p>Valutare il prezzo usando semplicemente la media e' molto approssimativo e comunque costituira' il valore di riferimento rispetto al quale dovremo migliorare.</p>
 <p>Si intuisce che una retta probabilmente sarebbe una soluzione migliore e punto per punto seguirebbe meglio andamento dei valori reali.</p>
-<p>Esegui la cella sottostante dove viene rapidamente generata e disegnata una retta che rappresenta il prezzo in funzione della sola variabile AGST.</p>
+<p>Esegui la cella sottostante dove viene rapidamente generata e disegnata una retta che rappresenta il prezzo in funzione della sola variabile AGE.</p>
 <ul>
-<li>La retta che vedrai rappresenta un modello di <strong>Regressione Lineare</strong> che rappresenta l'andamento del prezzo in funzione di AGST.</li>
+<li>La retta che vedrai rappresenta un modello di <strong>Regressione Lineare</strong> che rappresenta l'andamento del prezzo in funzione di AGE.</li>
 </ul>
 <ul>
 <li>La variabile indipente viene detta che <strong>label</strong> o <strong>target</strong> : e' quanto il codice machine learning  deve imparare a predire.</li>
@@ -13025,7 +13045,7 @@ dove x1 corrisponde ad Age.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre>pc1<span class="o">=</span>ggplot<span class="p">(</span>wine<span class="p">,</span>aes<span class="p">(</span>x<span class="o">=</span>Age<span class="p">,</span>y<span class="o">=</span>Price<span class="p">))</span>
@@ -13095,10 +13115,10 @@ pc1<span class="o">+</span>geom_point<span class="p">()</span><span class="o">+<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre>modello1<span class="o">=</span>lm<span class="p">(</span> Price <span class="o">~</span> AGST<span class="p">,</span> data<span class="o">=</span>wine <span class="p">)</span>
+<div class=" highlight hl-r"><pre>model1<span class="o">=</span>lm<span class="p">(</span> Price <span class="o">~</span> AGST<span class="p">,</span> data<span class="o">=</span>wine <span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13108,10 +13128,10 @@ pc1<span class="o">+</span>geom_point<span class="p">()</span><span class="o">+<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span class="kp">summary</span><span class="p">(</span>modello1<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span class="kp">summary</span><span class="p">(</span>model1<span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13190,10 +13210,10 @@ Il modello sara' buono se la somma di tutti gli ε sara' piccolo idealmente tend
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre>modello1<span class="o">$</span>residuals
+<div class=" highlight hl-r"><pre>model1<span class="o">$</span>residuals
 </pre></div>
 
 </div>
@@ -13280,10 +13300,10 @@ Il modello sara' buono se la somma di tutti gli ε sara' piccolo idealmente tend
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre>distanza_da_modello<span class="o">=</span><span class="kp">sum</span><span class="p">((</span>modello1<span class="o">$</span>residuals<span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre>distanza_da_modello<span class="o">=</span><span class="kp">sum</span><span class="p">((</span>model1<span class="o">$</span>residuals<span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
 distanza_da_modello
 </pre></div>
 
@@ -13327,11 +13347,11 @@ dove x1=AGST e x2= HarvestRain</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre>modello2<span class="o">=</span>lm<span class="p">(</span> Price <span class="o">~</span> AGST<span class="o">+</span>HarvestRain<span class="p">,</span> data<span class="o">=</span>wine <span class="p">)</span>
-<span class="kp">summary</span><span class="p">(</span>modello2<span class="p">)</span>
+<div class=" highlight hl-r"><pre>model2<span class="o">=</span>lm<span class="p">(</span> Price <span class="o">~</span> AGST<span class="o">+</span>HarvestRain<span class="p">,</span> data<span class="o">=</span>wine <span class="p">)</span>
+<span class="kp">summary</span><span class="p">(</span>model2<span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13395,10 +13415,10 @@ Aggiungendo variabili, il valore di R-squared incrementa. Non sempre pero' la va
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre>distanza_da_modello2<span class="o">=</span><span class="kp">sum</span><span class="p">((</span>modello2<span class="o">$</span>residuals<span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre>distanza_da_modello2<span class="o">=</span><span class="kp">sum</span><span class="p">((</span>model2<span class="o">$</span>residuals<span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
 distanza_da_modello2
 </pre></div>
 
@@ -13439,11 +13459,11 @@ distanza_da_modello2
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre>modello3<span class="o">=</span>lm<span class="p">(</span> Price <span class="o">~</span> AGST<span class="o">+</span>HarvestRain<span class="o">+</span>WinterRain<span class="o">+</span>Age<span class="p">,</span> data<span class="o">=</span>wine <span class="p">)</span>
-<span class="kp">summary</span><span class="p">(</span>modello3<span class="p">)</span>
+<span class="kp">summary</span><span class="p">(</span>model3<span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13527,7 +13547,7 @@ F-statistic: 26.38 on 4 and 23 DF,  p-value: 2.662e-08
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Crea un modello di price che usa solo AGE</p>
-<p>Quanto ve R2 del modello?</p>
+<p>Quanto vale R2 del modello?</p>
 <p>Calcola il valore di R2 a partire dai residual del modello. Ricorda che R2 e' riferito all'errore commesso nel modello basico di riferimento</p>
 
 </div>
@@ -13535,7 +13555,7 @@ F-statistic: 26.38 on 4 and 23 DF,  p-value: 2.662e-08
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span class="c1">#modello4=**scrivi il tuo codice qui ** </span>
@@ -13558,12 +13578,42 @@ mioR2
 <div class="prompt"></div>
 
 
-<div class="output_subarea output_text output_error">
+
+
+<div class="output_text output_subarea ">
 <pre>
-Error in eval(expr, envir, enclos): object &#39;mioR2&#39; not found
-Traceback:
+Call:
+lm(formula = Price ~ Age, data = wine)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.86883 -0.48776  0.04984  0.49739  1.24065 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  6.52476    0.23850  27.358   &lt;2e-16 ***
+Age          0.03310    0.01337   2.475   0.0201 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.5725 on 26 degrees of freedom
+Multiple R-squared:  0.1907,	Adjusted R-squared:  0.1596 
+F-statistic: 6.127 on 1 and 26 DF,  p-value: 0.02015
 </pre>
 </div>
+
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+0.190722352492258
+</div>
+
 </div>
 
 </div>
@@ -13584,11 +13634,11 @@ Traceback:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre>modello5<span class="o">=</span>lm<span class="p">(</span> Price <span class="o">~</span> AGST<span class="o">+</span>HarvestRain<span class="o">+</span>WinterRain<span class="p">,</span> data<span class="o">=</span>wine <span class="p">)</span>
-<span class="kp">summary</span><span class="p">(</span>modello5<span class="p">)</span>
+<div class=" highlight hl-r"><pre>modello4<span class="o">=</span>lm<span class="p">(</span> Price <span class="o">~</span> AGST<span class="o">+</span>HarvestRain<span class="o">+</span>WinterRain<span class="p">,</span> data<span class="o">=</span>wine <span class="p">)</span>
+<span class="kp">summary</span><span class="p">(</span>modello4<span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13648,7 +13698,7 @@ Scegliamo il model4 e verifichiamo la capacita' del modello di predire il prezzo
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre>obj <span class="o">&lt;-</span> s3HTTP<span class="p">(</span>
@@ -13700,10 +13750,10 @@ winetest <span class="o">&lt;-</span> read.csv<span class="p">(</span>text <span
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre>predictTest<span class="o">=</span>predict<span class="p">(</span>modello3<span class="p">,</span>newdata<span class="o">=</span>winetest<span class="p">)</span>
+<div class=" highlight hl-r"><pre>predictTest<span class="o">=</span>predict<span class="p">(</span>model4<span class="p">,</span>newdata<span class="o">=</span>winetest<span class="p">)</span>
 predictTest
 </pre></div>
 
